@@ -31,7 +31,6 @@ class ViewController: UIViewController {
     ]
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         updateUI()
         // Do any additional setup after loading the view.
     }
@@ -42,9 +41,15 @@ class ViewController: UIViewController {
         let actualAnswer = quiz[questionNumber].answer
         
         if userAnswer == actualAnswer {
-            print("Right")
+            sender.backgroundColor = .green
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2 ) {
+//                sender.backgroundColor = .clear
+//             }
         } else {
-            print("Wrong")
+                sender.backgroundColor = .red
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2 ) {
+//                sender.backgroundColor = .clear
+//             }
         }
         
         if questionNumber + 1 < quiz.count{
@@ -53,12 +58,17 @@ class ViewController: UIViewController {
             questionNumber = 0
         }
         
-        updateUI()
+        Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(updateUI), userInfo: nil, repeats: false)
         
+       
     }
-    func updateUI() {
+    @objc func updateUI() {
         questionLB.text = quiz[questionNumber].text
+        trueBtn.backgroundColor = UIColor.clear
+        falseBtn.backgroundColor = UIColor .clear
+        progressBar.progress = Float(questionNumber) / Float(quiz.count)
     }
+    
     
 }
 
