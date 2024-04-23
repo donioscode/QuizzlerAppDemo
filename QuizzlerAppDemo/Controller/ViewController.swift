@@ -10,9 +10,11 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var scoreLB: UILabel!
-    @IBOutlet weak var trueBtn: UIButton!
+    @IBOutlet weak var choice1: UIButton!
     @IBOutlet weak var questionLB: UILabel!
-    @IBOutlet weak var falseBtn: UIButton!
+    @IBOutlet weak var choice2: UIButton!
+    
+    @IBOutlet weak var choice3: UIButton!
     @IBOutlet weak var progressBar: UIProgressView!
     
     
@@ -31,14 +33,8 @@ class ViewController: UIViewController {
         
         if userGotItRight {
             sender.backgroundColor = .green
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2 ) {
-//                sender.backgroundColor = .clear
-//             }
         } else {
             sender.backgroundColor = .red
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2 ) {
-//                sender.backgroundColor = .clear
-//             }
         }
         
         quizBrain.nextQuestion()
@@ -48,11 +44,19 @@ class ViewController: UIViewController {
        
     }
     @objc func updateUI() {
+        let answerChoices = quizBrain.getAnswers()
+        choice1.setTitle(answerChoices[0], for: .normal)
+        choice2.setTitle(answerChoices[1], for: .normal)
+        choice3.setTitle(answerChoices[2], for: .normal)
+        
+        progressBar.progress = quizBrain.getProgress()
         questionLB.text = quizBrain.getQuestionText()
         scoreLB.text = "Score: \(quizBrain.getScore())"
-        trueBtn.backgroundColor = UIColor.clear
-        falseBtn.backgroundColor = UIColor .clear
-        progressBar.progress = quizBrain.getProgress()
+        
+        choice1.backgroundColor = UIColor.clear
+        choice2.backgroundColor = UIColor.clear
+        choice3.backgroundColor = UIColor.clear
+        
     }
     
     
